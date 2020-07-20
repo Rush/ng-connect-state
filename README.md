@@ -37,6 +37,8 @@ You can bind multiple observables and reload them individually as well:
 @ConnectState()
 @Component({})
 export class HomeComponent {
+  ngOnDestroy() { }
+
   constructor(private httpClient: HttpClient) {}
 
   // We'll dispose it on destroy
