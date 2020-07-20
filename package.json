@@ -18,13 +18,14 @@
     "serve:integration:static": "angular-http-server --path dist-integration -p 4200 -o"
   },
   "maintainers": [
-    "Damian Kaczmarek"
+    "Damian Kaczmarek <rush@rushbase.net>"
   ],
   "keywords": [
-    "Angular easy unsubscribe",
-    "RxJS easy unsubscribe",
-    "RxJS operator unsubscribe",
-    "Angular unsubscribe"
+    "Angular easy observables",
+    "Angular reactive components",
+    "Angular connect state",
+    "Angular easy state",
+    "Angular component observables"
   ],
   "devDependencies": {
     "@angular-builders/jest": "~9.0.1",
@@ -52,18 +53,6 @@
     "typescript": "3.8.3",
     "zone.js": "0.10.2",
     "@ngneat/until-destroy": "^7.3.2"
-  },
-  "lint-staged": {
-    "*.{js,ts,html,md,json}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "tabWidth": 2,
-    "printWidth": 95,
-    "endOfLine": "lf",
-    "singleQuote": true
   },
   "dependencies": {
     "minimist": "^1.2.5"

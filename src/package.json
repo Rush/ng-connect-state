@@ -24,13 +24,10 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "glob": "^7.1.6",
-    "minimist": "1.2.5",
-    "ts-morph": "^7.1.2"
+    "@ngneat/until-destroy": ">= 7.3.0"
   },
   "peerDependencies": {
     "@angular/core": ">=9.0.0",
-    "@ngneat/until-destroy": ">= 7.3.0",
     "rxjs": ">=6.4.0"
   },
   "ngPackage": {
@@ -38,9 +35,7 @@
       "entryFile": "index.ts"
     },
     "whitelistedNonPeerDependencies": [
-      "glob",
-      "minimist",
-      "ts-morph"
+      "@ngneat/until-destroy"
     ],
     "dest": "../dist"
   }
