@@ -1,4 +1,4 @@
-# 🦁 Connect state - Reactive components in Angular
+# Connect state - Reactive components in Angular
 
 > Automatically bind all asynchronous observables into a single synchronous sink. Extra features including loading indicators and simple API to reload your observables.
 
