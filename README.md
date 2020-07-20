@@ -2,6 +2,8 @@
 
 > Automatically bind all asynchronous observables into a single synchronous sink. Extra features including loading indicators and simple API to reload your observables.
 
+![ng-connect-state](https://github.com/Rush/ng-connect-state/workflows/ng-connect-state/badge.svg)
+
 **NOTE: Ivy required**
 
 ## Installation
