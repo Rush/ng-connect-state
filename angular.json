@@ -1,0 +1,83 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "connect-state": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "library",
+      "prefix": "connect-state",
+      "architect": {
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "no-cache": false
+          }
+        }
+      }
+    },
+    "integration": {
+      "root": "integration",
+      "sourceRoot": ".",
+      "projectType": "application",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist-integration",
+            "index": "integration/index.html",
+            "main": "integration/main.ts",
+            "polyfills": "integration/polyfills.ts",
+            "tsConfig": "integration/tsconfig.app.json",
+            "preserveSymlinks": true,
+            "aot": true,
+            "assets": ["integration/assets"]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "integration/environments/environment.ts",
+                  "with": "integration/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "integration:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "integration:build:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run"
+        }
+      }
+    }
+  },
+  "defaultProject": "connect-state"
+}

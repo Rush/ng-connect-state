@@ -1,0 +1,7 @@
+<button (click)="state.reload('counter')">Reload</button> counter: {{ state.counter }} / loading {{ state.loading.counter }}<br>
+<button (click)="state.reload('counter2')">Reload</button> counter2: {{ state.counter2 }} / loading {{ state.loading.counter2 }}<br>
+<button (click)="state.reload('counter3')">Reload</button> counter3: {{ state.counter3 }} / loading {{ state.loading.counter3 }}<br>
+<br>
+<button (click)="state.reload()">
+  Reload All
+</button>

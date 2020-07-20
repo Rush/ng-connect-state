@@ -1,0 +1,47 @@
+{
+  "$schema": "../node_modules/ng-packagr/package.schema.json",
+  "name": "ng-connect-state",
+  "description": "RxJS operator that unsubscribes when Angular component is destroyed",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rush/ng-connect-state.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Rush/ng-connect-state#readme",
+  "bugs": {
+    "url": "https://github.com/Rush/ng-connect-state/issues"
+  },
+  "maintainers": [
+    "Netanel Basal",
+    "Artur Androsovych"
+  ],
+  "keywords": [
+    "Angular easy unsubscribe",
+    "RxJS easy unsubscribe",
+    "RxJS operator unsubscribe",
+    "Angular unsubscribe"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "glob": "^7.1.6",
+    "minimist": "1.2.5",
+    "ts-morph": "^7.1.2"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=9.0.0",
+    "@ngneat/until-destroy": ">= 7.3.0",
+    "rxjs": ">=6.4.0"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "index.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+      "glob",
+      "minimist",
+      "ts-morph"
+    ],
+    "dest": "../dist"
+  }
+}
