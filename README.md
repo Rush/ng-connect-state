@@ -1,6 +1,6 @@
 # Connect state - Reactive components in Angular
 
-> Automatically bind all asynchronous observables into a single synchronous sink. Extra features including loading indicators and simple API to reload your observables.
+> Automatically bind all asynchronous observables into a simple synchronous sink. Extra features including loading indicators and simple API to reload your observables.
 
 ![ng-connect-state](https://github.com/Rush/ng-connect-state/workflows/ng-connect-state/badge.svg)
 
@@ -9,16 +9,26 @@
 ## Installation
 
 ```bash
-npm install ng-connect-state
+npm install ng-connect-state @ngneat/until-destroy
 # Or if you use yarn
-yarn add ng-connect-state
+yarn add ng-connect-state @ngneat/until-destroy
 ```
+
+`@ngneat/until-destroy` is a peer dependency.
+
+## Examples
 
 ```ts
 import { ConnectState, connectState } from 'ng-connect-state';
+import { interval } from 'rxjs';
 
 @ConnectState()
-@Component({ template: '{{ state.timer }} <button (click)="state.reload()"</button> Loading: {{ state.loading.timer }}' })
+@Component({ template: `
+  {{ state.timer }}
+  <button (click)="state.reload()"</button>
+  Loading: {{ state.loading.timer }}
+  `
+})
 export class InboxComponent {
   ngOnDestroy() { }
 
@@ -37,7 +47,7 @@ You can bind multiple observables and reload them individually as well:
 @ConnectState()
 @Component({})
 export class HomeComponent {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   // We'll dispose it on destroy
   state = connectState(this, {
