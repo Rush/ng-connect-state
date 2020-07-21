@@ -47,7 +47,9 @@ You can bind multiple observables and reload them individually as well:
 @ConnectState()
 @Component({})
 export class HomeComponent {
-  constructor(private apiService: ApiService) {}
+  ngOnDestroy() { }
+
+  constructor(private httpClient: HttpClient) {}
 
   // We'll dispose it on destroy
   state = connectState(this, {
