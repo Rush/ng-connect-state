@@ -19,10 +19,11 @@ yarn add ng-connect-state @ngneat/until-destroy
 ## Examples
 
 ```ts
-import { ConnectState, connectState } from 'ng-connect-state';
+import { connectState } from 'ng-connect-state';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { interval } from 'rxjs';
 
-@ConnectState()
+@UntilDestroy()
 @Component({ template: `
   {{ state.timer }}
   <button (click)="state.reload()"</button>
@@ -44,7 +45,7 @@ export class InboxComponent {
 You can bind multiple observables and reload them individually as well:
 
 ```ts
-@ConnectState()
+@UntilDestroy()
 @Component({})
 export class HomeComponent {
   ngOnDestroy() { }
@@ -65,11 +66,6 @@ export class HomeComponent {
   }
 }
 ```
-
-## Potential Pitfalls
-
-- The order of decorators is important, make sure to put `@ConnectState()` before the `@Component()` decorator.
-- When using [`overrideComponent`](https://angular.io/api/core/testing/TestBed#overrideComponent) in unit tests remember that it overrides metadata and component definition. Invoke `ConnectState()(YourComponent);` to reapply the decorator.
 
 ## Contributors ✨
 

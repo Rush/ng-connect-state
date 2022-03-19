@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ConnectState, connectState } from 'ng-connect-state';
+import { connectState } from 'ng-connect-state';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
 describe('connectState runtime behavior', () => {
@@ -21,12 +21,13 @@ describe('connectState runtime behavior', () => {
 
   it('should unsubscribe from the component property', () => {
     // Arrange
-    @ConnectState()
     @Component({ template: '' })
+    @UntilDestroy()
     class MockComponent {
       disposed = false;
 
-      ngOnDestroy() {}
+      ngOnDestroy() {
+      }
 
       state = connectState(this, {
         val: new Subject().pipe(finalize(() => { this.disposed = true; }))
@@ -52,9 +53,9 @@ describe('connectState runtime behavior', () => {
     @Component({
       template: '<div test></div>'
     })
+    @UntilDestroy()
     class MockComponent {}
 
-    @ConnectState()
     @Directive({ selector: '[test]' })
     class MockDirective {
       disposed = false;
@@ -86,8 +87,8 @@ describe('connectState runtime behavior', () => {
     // Arrange
     let disposed = false;
 
-    @ConnectState()
     @Pipe({ name: 'mock', pure: false })
+    @UntilDestroy()
     class MockPipe {
       disposed = false;
 
@@ -104,6 +105,7 @@ describe('connectState runtime behavior', () => {
       }
     }
 
+    @UntilDestroy()
     @Component({
       template: `
         <div>{{ 'foo' | mock }}</div>

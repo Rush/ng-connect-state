@@ -2,24 +2,23 @@ import {
   ɵComponentDef as ComponentDef,
   ɵɵdefineComponent as defineComponent
 } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
-import { stringify } from 'querystring';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { defer, Observable, Subject } from 'rxjs';
-import { ConnectState, connectState } from '..';
+import { connectState } from '..';
 
 describe('connectState', () => {
   it('should automatically unsubscribe from observables on destroy', () => {
     const spy = jest.fn();
 
-    @ConnectState()
+    @UntilDestroy()
     class TestComponent {
-      static ɵcmp: ComponentDef<TestComponent> = defineComponent({
+      static ɵcmp = defineComponent({
         vars: 0,
         decls: 0,
         type: TestComponent,
         selectors: [[]],
         template: () => {}
-      });
+      }) as ComponentDef<TestComponent>;
 
       constructor() {
       }
@@ -39,7 +38,7 @@ describe('connectState', () => {
     }
 
     const component = TestComponent.ɵfac();
-    TestComponent.ɵcmp.onDestroy!.call(component);
+    component.ngOnDestroy();
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
@@ -49,15 +48,15 @@ describe('connectState', () => {
       const spy = jest.fn(() => 'foo');
       const spy2 = jest.fn(() => 'foo');
 
-      @ConnectState()
+      @UntilDestroy()
       class TestComponent {
-        static ɵcmp: ComponentDef<TestComponent> = defineComponent({
+        static ɵcmp = defineComponent({
           vars: 0,
           decls: 0,
           type: TestComponent,
           selectors: [[]],
           template: () => {}
-        });
+        }) as ComponentDef<TestComponent>;
 
         constructor() {
         }
@@ -78,22 +77,22 @@ describe('connectState', () => {
       component.state.reload();
       expect(spy).toHaveBeenCalledTimes(2);
       expect(spy2).toHaveBeenCalledTimes(2);
-      TestComponent.ɵcmp.onDestroy!.call(component);
+      component.ngOnDestroy();
     });
 
     it('should reload specific obervable based on the key name', () => {
       const spy = jest.fn(() => 'foo');
       const spy2 = jest.fn(() => 'foo');
 
-      @ConnectState()
+      @UntilDestroy()
       class TestComponent {
-        static ɵcmp: ComponentDef<TestComponent> = defineComponent({
+        static ɵcmp = defineComponent({
           vars: 0,
           decls: 0,
           type: TestComponent,
           selectors: [[]],
           template: () => {}
-        });
+        }) as ComponentDef<TestComponent>;
 
         constructor() {
         }
@@ -114,22 +113,23 @@ describe('connectState', () => {
       component.state.reload('value');
       expect(spy).toHaveBeenCalledTimes(2);
       expect(spy2).toHaveBeenCalledTimes(1);
-      TestComponent.ɵcmp.onDestroy!.call(component);
+      // TestComponent.ɵcmp.onDestroy!.call(component);
+      component.ngOnDestroy();
     });
   });
 
   it('should expose loading state', () => {
     const value = new Subject<string>();
 
-    @ConnectState()
+    @UntilDestroy()
     class TestComponent {
-      static ɵcmp: ComponentDef<TestComponent> = defineComponent({
+      static ɵcmp = defineComponent({
         vars: 0,
         decls: 0,
         type: TestComponent,
         selectors: [[]],
         template: () => {}
-      });
+      }) as ComponentDef<TestComponent>;
 
       constructor() {
       }
@@ -148,46 +148,7 @@ describe('connectState', () => {
     value.next('foo');
     expect(component.state.loading.value).toEqual(false);
 
-    TestComponent.ɵcmp.onDestroy!.call(component);
-  });
-
-  it('should apply symbol to decorated class definition', () => {
-    @ConnectState()
-    class TestComponent {
-      static ɵcmp: ComponentDef<TestComponent> = defineComponent({
-        vars: 0,
-        decls: 0,
-        type: TestComponent,
-        selectors: [[]],
-        template: () => {}
-      });
-    }
-
-    const ownPropertySymbols = Object.getOwnPropertySymbols(TestComponent.ɵcmp);
-    const decoratorAppliedSymbol = ownPropertySymbols.find(
-      symbol => symbol.toString() === 'Symbol(__decoratorApplied)'
-    );
-
-    expect(decoratorAppliedSymbol).toBeDefined();
-  });
-
-  it('should throw if directive/component not decorated with ConnectState or UntilDestroy', () => {
-    class TestComponent {
-      static ɵcmp: ComponentDef<TestComponent> = defineComponent({
-        vars: 0,
-        decls: 0,
-        type: TestComponent,
-        selectors: [[]],
-        template: () => {}
-      });
-
-      ngOnDestroy() { }
-
-      state = connectState(this, {});
-
-      static ɵfac = () => new TestComponent();
-    }
-
-    expect(() => TestComponent.ɵfac()).toThrow(/untilDestroyed operator cannot be used inside directives or components or providers that are not decorated with UntilDestroy decorator/);
+    // TestComponent.ɵcmp.onDestroy!.call(component);
+    component.ngOnDestroy();
   });
 });

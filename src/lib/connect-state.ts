@@ -1,7 +1,7 @@
 import { OnDestroy, ɵmarkDirty as markDirty } from '@angular/core';
-import { untilDestroyed } from '@ngneat/until-destroy';
 import { from, Observable, ReplaySubject, Subject } from 'rxjs';
 import { mergeMap, tap, switchMap, startWith, filter } from 'rxjs/operators';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 type ObservableDictionary<T> = {
     [P in keyof T]: Observable<T[P]>;
@@ -43,6 +43,7 @@ export function connectState<C extends OnDestroy, T>(
         loading: {} as LoadingDictionary<T>,
         reload: (keyToReload?: keyof T) => reload$.next(keyToReload),
     };
+
     const reload = (singleKey?: keyof T) => {
         for (const key of (singleKey ? [ singleKey ] : sourceKeys)) {
             sink.$[key] = new ReplaySubject<any>(1);
@@ -75,13 +76,10 @@ export function connectState<C extends OnDestroy, T>(
             reload();
             return updateSink$;
         }),
-        untilDestroyed(component)
+        untilDestroyed(component),
     ).subscribe(() => {
-        try {
+        if ((component as any).__ngContext__) {
             markDirty(component);
-        } catch (err) {
-            // this can error when observables run before component
-            // is fully initialized
         }
     });
 

@@ -5,3 +5,4 @@ node_modules
 dist
 dist-integration
 .cache
+.angular
