@@ -4,8 +4,6 @@
   "description": "Helper function for angular to allow creation of reactive components",
   "license": "MIT",
   "scripts": {
-    "ngcc": "ngcc",
-    "postinstall": "ngcc",
     "ng": "ng",
     "lint": "ng lint",
     "test": "ng test --project connect-state --runInBand",
